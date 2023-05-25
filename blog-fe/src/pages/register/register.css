@@ -1,0 +1,49 @@
+.register {
+  height: calc(100vh - 50px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url('https://cdn.pixabay.com/photo/2020/02/27/14/05/planner-4884740_640.jpg');
+  background-size: cover;
+}
+.registerTitle {
+    font-size: 50px;
+}
+.registerForm {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.registerForm > label {
+    margin: 10px 0;
+}
+.registerInput {
+    padding: 10px;
+    background-color: #fff;
+    border: none;
+}
+.registerButton {
+    margin-top: 20px;
+    cursor: pointer;
+    background-color: teal;
+    border: none;
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+}
+.registerLoginButton {
+    position: absolute;
+    top:60px;
+    right: 20px;
+    background-color: lightcoral;
+    cursor: pointer;
+    border: none;
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+}
