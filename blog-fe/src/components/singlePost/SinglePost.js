@@ -1,41 +1,46 @@
+import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "./singlePost.css";
+import axiosApi from "../../config/axios";
 
 export default function SinglePost() {
+  const { postId } = useParams();
+  const [post, setPost] = useState({});
+  useEffect(() => {
+    const getPost = async () => {
+      const res = await axiosApi.get(
+        "http://localhost:5000/api/post/" + postId
+      );
+      setPost(res.data);
+      console.log(res.data);
+    };
+    getPost();
+  }, [postId]);
   return (
     <div className="singlePost">
       <div className="singlePostWrapper">
-        <img
-          src="https://creativelayers.net/themes/superio/images/resource/blog-single.jpg"
-          alt=""
-          className="singlePostImg"
-        />
+        {post.photo && (
+          <img src={post.photo} alt="" className="singlePostImg" />
+        )}
         <h1 className="singlePostTitle">
-          Attract Sales And Profits
+          {post.title}
           <div className="singlePostEdit">
-            <i class="singlePostIcon fa-solid fa-pen-to-square"></i>
-            <i class="singlePostIcon fa-solid fa-trash-can"></i>
+            <i className="singlePostIcon fa-solid fa-pen-to-square"></i>
+            <i className="singlePostIcon fa-solid fa-trash-can"></i>
           </div>
         </h1>
         <div className="singlePostInfo">
           <span className="singlePostAuthor">
-            Author: <b>Mr.Simp</b>
+            Author:
+            <Link to={`/?user=${post.author && post.author._id}`} className="link">
+              <b> {post.author && post.author.full_name}</b>
+            </Link>
           </span>
-          <span className="singlePostDate">1 Hour ago</span>
+          <span className="singlePostDate">
+            {new Date(post.createdAt).toDateString()}
+          </span>
         </div>
-        <p className="singlePostDesc">
-          Aliquam hendrerit sollicitudin purus, quis rutrum mi accumsan nec.
-          Quisque bibendum orci ac nibh facilisis, at malesuada orci congue.
-          Nullam tempus sollicitudin cursus. Ut et adipiscing erat. Curabitur
-          this is a text link libero tempus congue. Duis mattis laoreet neque,
-          et ornare neque sollicitudin at. Proin sagittis dolor sed mi elementum
-          pretium. Donec et justo ante. Vivamus egestas sodales est, eu rhoncus
-          urna semper eu. Cum sociis natoque penatibus et magnis dis parturient
-          montes, nascetur ridiculus mus. Integer tristique elit lobortis purus
-          bibendum, quis dictum metus mattis. Phasellus posuere felis sed eros
-          porttitor mattis. Curabitur massa magna, tempor in blandit id, porta
-          in ligula. Aliquam laoreet nisl massa, at interdum mauris sollicitudin
-          et.
-        </p>
+        <p className="singlePostDesc">{post.desc}</p>
       </div>
     </div>
   );

@@ -5,9 +5,11 @@ import Write from "./pages/write/Write";
 import Settings from "./pages/settings/Settings";
 import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useContext } from 'react';
+import { Context } from './context/Context';
 function App() {
-  const user = false;
+  const {user} = useContext(Context);
 
   return (
     <Router>
@@ -19,6 +21,7 @@ function App() {
         <Route path="/write" element={user ? <Write /> : <Login />}></Route>
         <Route path="/settings" element={user ? <Settings /> : <Login />}></Route>
         <Route path="/post/:postId" element={user ? <Single /> : <Login />}></Route>
+        {/* <Route path="/post/:postId" element={<Single />}></Route> */}
       </Routes>
     </Router>
   );

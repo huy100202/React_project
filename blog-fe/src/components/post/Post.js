@@ -1,32 +1,30 @@
 import "./post.css";
-
-export default function Post() {
+import { Link } from "react-router-dom";
+export default function Post({ post }) {
+  const PF = "localhost:5000/images";
   return (
     <div className="post">
       <div className="postItem">
-        <img
-          src="https://creativelayers.net/themes/superio/images/resource/news-2.jpg"
-          alt=""
-        />
+        {post.photo && (
+          <img
+            src={PF + post.photo}
+            alt=""
+          />
+        )}
         <div className="postInfo">
           <div className="postCats">
-            <span className="postCat">Music</span>
-            <span className="postCat">Life</span>
+            {post.categories.map((c) => (
+              <span className="postCat">{c.name}</span>
+            ))}
           </div>
-          <span className="postTitle">Attract Sales And Profits</span>
-          <hr />
-          <span className="postDate">1 hour ago</span>
+          <Link to={`/post/${post._id}`}>
+            <span className="postTitle">{post.title}</span>
+          </Link>
+          <span className="postDate">
+            {new Date(post.createdAt).toDateString()}
+          </span>
         </div>
-        <p className="postDesc">
-          Duis mattis laoreet neque, et ornare neque sollicitudin at. Proin
-          sagittis dolor sed mi elementum pretium. Donec et justo ante. Vivamus
-          egestas sodales est, eu rhoncus urna semper eu. Cum sociis natoque
-          penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-          Integer tristique elit lobortis purus bibendum, quis dictum metus
-          mattis. Phasellus posuere felis sed eros porttitor mattis. Curabitur
-          massa magna, tempor in blandit id, porta in ligula. Aliquam laoreet nisl
-          massa, at interdum mauris sollicitudin et.
-        </p>
+        <p className="postDesc">{post.desc}</p>
       </div>
     </div>
   );
