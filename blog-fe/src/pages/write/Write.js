@@ -21,9 +21,14 @@ export default function Write() {
       const data = new FormData();
       const filename = Date.now() + file.name;
       data.append("name", filename);
+      data.append("file", file);
       newPost.photo = filename;
       try {
-        await axiosApi.post("upload", data);
+        await axiosApi.post("http://localhost:5000/api/upload", data, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Đảm bảo đặt đúng định dạng
+        },
+      });
       } catch (e) {}
     }
     try {
